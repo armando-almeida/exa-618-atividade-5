@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Visualizador do Crawler</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f4f4f9; padding: 20px; }
+        .galeria { display: flex; flex-wrap: wrap; gap: 15px; }
+        .galeria img { max-width: 250px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+
+    <div id="conteudo">
+        <h1> Carregando dados dos colegas</h1>
+    </div>
+
+    <script>
+        fetch('dados.json')
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('conteudo');
+            
+                
+                for (const [title, images] of Object.entries(data)) {
+                    
+                    let htmlString = `<h2>${title}</h2><div class="galeria">`;
+                    
+                    images.forEach(imgLink => {
+                        htmlString += `<img src="${imgLink}" alt="Imagem quebrada">`;
+                    });
+                    
+                    htmlString += `</div>`;
+ 
+                    container.innerHTML += htmlString;
+                }
+            })
+            .catch(error => console.error("Erro ao carregar os dados:", error));
+    </script>
+</body>
+</html>
